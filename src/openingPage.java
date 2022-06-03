@@ -25,6 +25,14 @@ public class openingPage extends JFrame {
                 passwort = String.valueOf(passwordField1.getPassword());
 
                 System.out.println(benutzername+":"+passwort);
+
+                if(true){
+                    homePage hp = new homePage();
+                    hp.setVisible(true);
+                    hp.Name.setText("Burak Polat");
+                    hp.authority.setText("(Admin)");
+                    setVisible(false);
+                }
             }
         });
     }
