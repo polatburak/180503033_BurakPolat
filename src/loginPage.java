@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class loginPage extends JFrame {
     private JTextField benutzernameField1;
@@ -8,12 +9,25 @@ public class loginPage extends JFrame {
     private JButton logInButton;
     private JPanel panel1;
 
+    final String DB_URL = "jdbc:mysql://127.0.0.1:3306";
+    final String USERNAME = "root";
+    final String PASSWORD = "";
+
+    Connection conn = null;
+
+    {
+        try {
+            conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public loginPage(){
         add(panel1);
         setSize(400,200);
         setTitle("Log-in");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 
         logInButton.addActionListener(new ActionListener() {
             @Override
