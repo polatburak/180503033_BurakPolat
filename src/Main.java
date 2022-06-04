@@ -19,7 +19,7 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                openingPage oP = new openingPage();
+                loginPage oP = new loginPage();
                 oP.setVisible(true);
             }
         });

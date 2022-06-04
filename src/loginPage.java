@@ -2,13 +2,13 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class openingPage extends JFrame {
+public class loginPage extends JFrame {
     private JTextField benutzernameField1;
     private JPasswordField passwordField1;
     private JButton logInButton;
     private JPanel panel1;
 
-    public openingPage(){
+    public loginPage(){
         add(panel1);
         setSize(400,200);
         setTitle("Log-in");
