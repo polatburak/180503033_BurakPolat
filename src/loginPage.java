@@ -9,20 +9,6 @@ public class loginPage extends JFrame {
     private JButton logInButton;
     private JPanel panel1;
 
-    final String DB_URL = "jdbc:mysql://127.0.0.1:3306";
-    final String USERNAME = "root";
-    final String PASSWORD = "";
-
-    Connection conn = null;
-
-    {
-        try {
-            conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public loginPage(){
         add(panel1);
         setSize(400,200);
@@ -39,6 +25,8 @@ public class loginPage extends JFrame {
                 passwort = String.valueOf(passwordField1.getPassword());
 
                 System.out.println(benutzername+":"+passwort);
+
+
 
                 if(true){
                     homePage hp = new homePage();
