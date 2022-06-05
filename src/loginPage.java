@@ -30,7 +30,7 @@ public class loginPage extends JFrame {
                 String actualPass = null;
 
                 try {
-                    actualPass = rP.returnPass();
+                    actualPass = rP.returnPass(benutzername);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -53,11 +53,11 @@ public class loginPage extends JFrame {
 
     public static class returnPass {
 
-        public static String returnPass() throws SQLException {
+        public static String returnPass(String benutzername) throws SQLException {
             connectionJDBC cJDBC = new connectionJDBC();
             Connection conn = cJDBC.getConn();
 
-            String query1 = "SELECT passwort FROM myschema.benutzer WHERE benutzername = 'burakpolat'";
+            String query1 = String.format("SELECT passwort FROM myschema.benutzer WHERE benutzername = '%s'",benutzername);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query1);
             String pass = null;
