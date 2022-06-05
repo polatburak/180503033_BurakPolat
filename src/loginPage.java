@@ -26,16 +26,46 @@ public class loginPage extends JFrame {
 
                 System.out.println(benutzername+":"+passwort);
 
+                returnPass rP = new returnPass();
+                String actualPass = null;
 
+                try {
+                    actualPass = rP.returnPass();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
 
-                if(true){
+                if(passwort.equals(actualPass)){
                     homePage hp = new homePage();
                     hp.setVisible(true);
                     hp.Name.setText("Burak Polat");
                     hp.authority.setText("(Admin)");
                     setVisible(false);
+                }else{
+                    JOptionPane.showMessageDialog(null,
+                            "Wrong Password!",
+                            "Error",
+                            JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
+    }
+
+    public static class returnPass {
+
+        public static String returnPass() throws SQLException {
+            connectionJDBC cJDBC = new connectionJDBC();
+            Connection conn = cJDBC.getConn();
+
+            String query1 = "SELECT passwort FROM myschema.benutzer WHERE benutzername = 'burakpolat'";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query1);
+            String pass = null;
+            while (rs.next())
+                pass = rs.getString(1);
+
+            return pass;
+
+        }
     }
 }
