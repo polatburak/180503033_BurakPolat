@@ -18,34 +18,56 @@ public class loginPage extends JFrame {
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String benutzername;
-                String passwort;
+                String benutzername = null;
+                String passwort = null;
 
                 benutzername = benutzernameField1.getText();
                 passwort = String.valueOf(passwordField1.getPassword());
 
-                System.out.println(benutzername+":"+passwort);
-
-                returnPass rP = new returnPass();
-                String actualPass = null;
-
+                checkUsername cU = new checkUsername();
+                boolean usernameCorrect = true;
                 try {
-                    actualPass = rP.returnPass(benutzername);
+                    if (cU.checkUsername(benutzername) == false) {
+                        JOptionPane.showMessageDialog(null,
+                                "Wrong Username!",
+                                "Error",
+                                JOptionPane.WARNING_MESSAGE);
+                        usernameCorrect = false;
+                    }
                 } catch (SQLException ex) {
+                    try {
+                        System.out.println(checkUsername.checkUsername(benutzername));
+                    } catch (SQLException exc) {
+                        exc.printStackTrace();
+                    }
                     ex.printStackTrace();
                 }
 
-                if(passwort.equals(actualPass)){
-                    homePage hp = new homePage();
-                    hp.setVisible(true);
-                    hp.Name.setText("Burak Polat");
-                    hp.authority.setText("(Admin)");
-                    setVisible(false);
-                }else{
-                    JOptionPane.showMessageDialog(null,
-                            "Wrong Password!",
-                            "Error",
-                            JOptionPane.WARNING_MESSAGE);
+
+                System.out.println(benutzername + ":" + passwort);
+
+                if (usernameCorrect == true) {
+                    returnPass rP = new returnPass();
+                    String actualPass = null;
+
+                    try {
+                        actualPass = rP.returnPass(benutzername);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    if (passwort.equals(actualPass)) {
+                        homePage hp = new homePage();
+                        hp.setVisible(true);
+                        hp.Name.setText("Burak Polat");
+                        hp.authority.setText("(Admin)");
+                        setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "Wrong Password!",
+                                "Error",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
                 }
             }
         });
@@ -66,6 +88,21 @@ public class loginPage extends JFrame {
 
             return pass;
 
+        }
+    }
+
+    public static class checkUsername{
+        public static boolean checkUsername(String benutzername) throws SQLException{
+
+            connectionJDBC cJDBC = new connectionJDBC();
+            Connection conn = cJDBC.getConn();
+
+            String query2 = String.format("SELECT benutzername FROM myschema.benutzer WHERE benutzername = '%s'",benutzername);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query2);
+            if(rs.next() == false)
+                return false;
+            else return true;
         }
     }
 }
