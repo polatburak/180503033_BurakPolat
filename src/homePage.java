@@ -2,13 +2,14 @@ import javax.swing.*;
 
 public class homePage extends JFrame {
     public JLabel Name;
-    private JPanel panel2;
+    private JPanel mainPanel;
+    private JPanel selectionPanel;
+    private JPanel parentPanel;
     public JLabel authority;
-    private JList list1;
 
     public homePage(){
-        add(panel2);
-        setSize(600, 300);
+        add(mainPanel);
+        setSize(900, 600);
         setTitle("Homepage");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
