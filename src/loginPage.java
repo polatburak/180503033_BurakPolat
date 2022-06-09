@@ -15,6 +15,7 @@ public class loginPage extends JFrame {
         setLocationRelativeTo(null);
         setTitle("Log-in");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        SwingUtilities.getRootPane(logInButton).setDefaultButton(logInButton);
 
         logInButton.addActionListener(new ActionListener() {
             @Override
