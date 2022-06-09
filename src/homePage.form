@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="homePage">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="4849" height="566"/>
@@ -102,14 +102,14 @@
       </grid>
       <grid id="ef03f" binding="parentPanel" layout-manager="CardLayout" hgap="0" vgap="0">
         <constraints>
-          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false">
+          <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false">
             <preferred-size width="5200" height="-1"/>
           </grid>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="2bab7" binding="datenbankPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="2bab7" binding="datenbankPanel" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <card name="Card1"/>
@@ -121,33 +121,56 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="6a629" class="javax.swing.JTable" binding="dataTable">
+              <scrollpane id="b36f0">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="50"/>
-                  </grid>
+                  <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <autoCreateColumnsFromModel value="true"/>
-                  <autoCreateRowSorter value="true"/>
-                  <autoResizeMode value="4"/>
-                  <toolTipText value=""/>
+                  <focusable value="false"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="63f1f" class="javax.swing.JTable" binding="dataTable">
+                    <constraints/>
+                    <properties>
+                      <autoCreateRowSorter value="true"/>
+                      <cellSelectionEnabled value="true"/>
+                      <editingColumn value="-1"/>
+                      <editingRow value="-1"/>
+                      <focusable value="false"/>
+                      <rowSelectionAllowed value="true"/>
+                    </properties>
+                    <clientProperties>
+                      <JTable.autoStartsEdit class="java.lang.Boolean" value="true"/>
+                      <Table.isFileList class="java.lang.Boolean" value="false"/>
+                      <terminateEditOnFocusLost class="java.lang.Boolean" value="true"/>
+                    </clientProperties>
+                  </component>
+                </children>
+              </scrollpane>
+              <component id="fffb9" class="javax.swing.JButton" binding="refreshButton">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-16773567"/>
+                  <borderPainted value="false"/>
+                  <foreground color="-16773567"/>
+                  <text value=""/>
                 </properties>
               </component>
-              <component id="11eca" class="javax.swing.JButton" binding="button1" default-binding="true">
+              <component id="43121" class="javax.swing.JComboBox" binding="tableSelector">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Button"/>
-                </properties>
-              </component>
-              <component id="cf32f" class="javax.swing.JButton" binding="button2" default-binding="true">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Button"/>
+                  <model>
+                    <item value="Personalen"/>
+                    <item value="Benutzern"/>
+                    <item value="Fahrzeuge"/>
+                    <item value="Klassen"/>
+                    <item value="Studenten"/>
+                  </model>
                 </properties>
               </component>
             </children>
@@ -242,6 +265,22 @@
           <horizontalAlignment value="0"/>
           <horizontalTextPosition value="2"/>
           <text value="NameGoesHere"/>
+        </properties>
+      </component>
+      <component id="3b6f4" class="javax.swing.JButton" binding="addRowEntryIntoButton" default-binding="true">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Add Row Entry into Database"/>
+        </properties>
+      </component>
+      <component id="453b9" class="javax.swing.JButton" binding="deleteRowButton" default-binding="true">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Delete Row"/>
         </properties>
       </component>
     </children>

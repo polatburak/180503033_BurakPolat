@@ -8,6 +8,7 @@ public class loginPage extends JFrame {
     private JPasswordField passwordField1;
     private JButton logInButton;
     private JPanel panel1;
+    public static String benutzername;
 
     public loginPage(){
         add(panel1);
@@ -20,7 +21,7 @@ public class loginPage extends JFrame {
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String benutzername = null;
+                benutzername = null;
                 String passwort = null;
 
                 benutzername = benutzernameField1.getText();
@@ -79,7 +80,7 @@ public class loginPage extends JFrame {
             connectionJDBC cJDBC = new connectionJDBC();
             Connection conn = cJDBC.getConn();
 
-            String query1 = String.format("SELECT passwort FROM myschema.benutzer WHERE benutzername = '%s'",benutzername);
+            String query1 = String.format("SELECT passwort FROM myschema.Benutzern WHERE benutzername = '%s'",benutzername);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query1);
             String pass = null;
@@ -97,7 +98,7 @@ public class loginPage extends JFrame {
             connectionJDBC cJDBC = new connectionJDBC();
             Connection conn = cJDBC.getConn();
 
-            String query2 = String.format("SELECT benutzername FROM myschema.benutzer WHERE benutzername = '%s'",benutzername);
+            String query2 = String.format("SELECT benutzername FROM myschema.Benutzern WHERE benutzername = '%s'",benutzername);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query2);
             if(rs.next() == false)

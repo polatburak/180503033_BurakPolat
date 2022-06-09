@@ -28,8 +28,11 @@ public class homePage extends JFrame {
     private JLabel nameLabel;
     private JLabel benutzerLabel;
     private JTable dataTable;
-    private JButton button1;
-    private JButton button2;
+    private JComboBox tableSelector;
+    private JButton refreshButton;
+    private JButton addRowEntryIntoButton;
+    private JButton deleteRowButton;
+
 
     public homePage(){
         add(mainPanel);
@@ -37,12 +40,16 @@ public class homePage extends JFrame {
         setLocationRelativeTo(null);
         setTitle("Homepage");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        dataTable.setEnabled(false);
+        dataTable.setBackground(Color.cyan);
         setStartPanel();
-        setBenutzerLabel();
-        fillDataTable();
+        setLabelIcon();
+        setDataTable();
+        ImageIcon refreshIcon = new ImageIcon(new ImageIcon("images/refresh-logo.png").getImage().getScaledInstance(32,18, Image.SCALE_DEFAULT));
+        refreshButton.setIcon(refreshIcon);
+        fillDataTable("Personalen");
+        ListSelectionModel model = dataTable.getSelectionModel();
 
-        try {
+            try {
             setName();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,10 +57,7 @@ public class homePage extends JFrame {
         startseiteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                parentPanel.removeAll();
-                parentPanel.add(startPanel);
-                parentPanel.repaint();
-                parentPanel.revalidate();
+                setStartPanel();
             }
         });
         datenbankButton.addActionListener(new ActionListener() {
@@ -74,13 +78,28 @@ public class homePage extends JFrame {
                 parentPanel.revalidate();
             }
         });
-        suchenButton.addActionListener(new ActionListener() {
+        tableSelector.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                parentPanel.removeAll();
-                parentPanel.add(suchePanel);
-                parentPanel.repaint();
-                parentPanel.revalidate();
+                String tableName = null;
+                tableName = String.format("" + tableSelector.getSelectedItem());
+                if(tableName.equals("Benutzern") && (!getPrivilege(loginPage.benutzername).equals("admin"))) {
+                    JOptionPane.showMessageDialog(null,
+                            "Permission Denied!",
+                            "Error",
+                            JOptionPane.WARNING_MESSAGE);
+                    tableSelector.setSelectedItem("Personalen");
+                    tableName = "Personalen";
+                    fillDataTable(tableName);
+                }
+                else
+                    fillDataTable(tableName);
+            }
+        });
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fillDataTable(String.format("" + tableSelector.getSelectedItem()));
             }
         });
     }
@@ -89,7 +108,7 @@ public class homePage extends JFrame {
         connectionJDBC cJDBC = new connectionJDBC();
         Connection conn = cJDBC.getConn();
 
-        String query2 = "SELECT Vorname, Nachname FROM myschema.personal, myschema.benutzer WHERE benutzer.idbenutzer = personal.idbenutzer";
+        String query2 = "SELECT Vorname, Nachname FROM myschema.Personalen, myschema.Benutzern WHERE Benutzern.idbenutzer = Personalen.idbenutzer";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(query2);
         String Vorname = null, Nachname = null;
@@ -115,15 +134,16 @@ public class homePage extends JFrame {
     }
 
     //add image next to benutzerLabel
-    public void setBenutzerLabel(){
+    public void setLabelIcon(){
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("images/Sample_User_Icon.png").getImage().getScaledInstance(32, 32, Image.SCALE_DEFAULT));
         benutzerLabel.setIcon(imageIcon);
 
     }
 
 
+
     //fill dataTable with data from database
-    public void fillDataTable(){
+    public void fillDataTable(String tablename){
         connectionJDBC cJDBC = new connectionJDBC();
         Connection conn = null;
         try {
@@ -131,7 +151,7 @@ public class homePage extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        String query = "SELECT * FROM myschema.personal";
+        String query = String.format("SELECT * FROM myschema.%s",tablename);
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -141,7 +161,32 @@ public class homePage extends JFrame {
         }
     }
 
+    public void setDataTable() {
+        dataTable.setRowSelectionAllowed(true);
+    }
 
+    //get privilage from table Benutzern
+    public String getPrivilege(String username){
+        connectionJDBC cJDBC = new connectionJDBC();
+        Connection conn = null;
+        try {
+            conn = cJDBC.getConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String query = String.format("SELECT Privileg FROM myschema.Benutzern WHERE Benutzername = '%s'",username);
+        String privilege = null;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()) {
+                privilege = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return privilege;
+    }
 
 }
 
