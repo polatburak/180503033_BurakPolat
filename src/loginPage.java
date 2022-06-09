@@ -12,6 +12,7 @@ public class loginPage extends JFrame {
     public loginPage(){
         add(panel1);
         setSize(400,200);
+        setLocationRelativeTo(null);
         setTitle("Log-in");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -59,8 +60,6 @@ public class loginPage extends JFrame {
                     if (passwort.equals(actualPass)) {
                         homePage hp = new homePage();
                         hp.setVisible(true);
-                        hp.Name.setText("Burak Polat");
-                        hp.authority.setText("(Admin)");
                         setVisible(false);
                     } else {
                         JOptionPane.showMessageDialog(null,
