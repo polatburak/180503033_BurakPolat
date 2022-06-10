@@ -5,6 +5,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
@@ -24,6 +25,8 @@ public class Main {
                 oP.setVisible(true);
             }
         });
+
+
 
     }
 

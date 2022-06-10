@@ -12,34 +12,37 @@ import java.text.SimpleDateFormat;
 
 
 public class homePage extends JFrame {
-    public JLabel Name;
-    public JPanel mainPanel;
-    public JPanel selectionPanel;
-    public JPanel parentPanel;
-    public JButton datenbankButton;
-    public JButton überDenBenutzerButton;
-    public JButton suchenButton;
-    public JPanel datenbankPanel;
-    public JPanel benutzerPanel;
-    public JPanel suchePanel;
-    public JButton startseiteButton;
-    public JPanel startPanel;
-    public JTextArea displayedText;
-    public JLabel nameLabel;
-    public JLabel benutzerLabel;
-    public JTable dataTable;
-    public JComboBox tableSelector;
-    public JButton refreshButton;
-    public JButton addARowToButton;
-    public JButton deleteSelectedRowButton;
-    public JButton updateTheModifiedRowButton;
-    public JLabel bnLabel;
-    public JLabel usernameArea;
-    public JLabel nameArea;
-    public JLabel dateArea;
-    public JLabel privilegArea;
-    
+    private JLabel Name;
+    private JPanel mainPanel;
+    private JPanel selectionPanel;
+    private JPanel parentPanel;
+    private JButton datenbankButton;
+    private JButton überDenBenutzerButton;
+    private JButton suchenButton;
+    private JPanel datenbankPanel;
+    private JPanel benutzerPanel;
+    private JPanel suchePanel;
+    private JButton startseiteButton;
+    private JPanel startPanel;
+    private JTextArea displayedText;
+    private JLabel nameLabel;
+    private JLabel benutzerLabel;
+    private JTable dataTable;
+    private JComboBox tableSelector;
+    private JButton refreshButton;
+    private JButton addARowToButton;
+    private JButton deleteSelectedRowButton;
+    private JButton updateTheModifiedRowButton;
+    private JLabel bnLabel;
+    private JLabel usernameArea;
+    private JLabel nameArea;
+    private JLabel dateArea;
+    private JLabel privilegArea;
+    private JLabel fahrschulsysIcon;
+
+
     public homePage() {
+
         add(mainPanel);
         setSize(1200, 800);
         setLocationRelativeTo(null);
@@ -48,14 +51,18 @@ public class homePage extends JFrame {
         dataTable.setBackground(Color.cyan);
         setStartPanel();
         setLabelIcon();
+
+
         try {
             setNameF(loginPage.benutzername);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        ImageIcon fahrschulSys = new ImageIcon(new ImageIcon("images/fahrschulsys.png").getImage().getScaledInstance(550, 123, Image.SCALE_AREA_AVERAGING));
+        fahrschulsysIcon.setIcon(fahrschulSys);
 
         setDataTable();
-        ImageIcon refreshIcon = new ImageIcon(new ImageIcon("images/refresh-logo.png").getImage().getScaledInstance(32, 18, Image.SCALE_DEFAULT));
+        ImageIcon refreshIcon = new ImageIcon(new ImageIcon("images/refresh.png").getImage().getScaledInstance(28, 28, Image.SCALE_AREA_AVERAGING));
         refreshButton.setIcon(refreshIcon);
         fillDataTable("Personalen");
         ListSelectionModel model = dataTable.getSelectionModel();
@@ -186,7 +193,7 @@ public class homePage extends JFrame {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
-        Line2D lin = new Line2D.Float(200, 0, 200, getHeight());
+        Line2D lin = new Line2D.Float(185, 0, 185, getHeight());
         g2.draw(lin);
     }
 
