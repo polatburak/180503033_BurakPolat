@@ -38,11 +38,7 @@ public class loginPage extends JFrame {
                         usernameCorrect = false;
                     }
                 } catch (SQLException ex) {
-                    try {
-                        System.out.println("Username couldn't be found: " + checkUsername.checkUsername(benutzername));
-                    } catch (SQLException exc) {
-                        exc.printStackTrace();
-                    }
+                    System.out.println("Failed connecting to server");
                     ex.printStackTrace();
                 }
 

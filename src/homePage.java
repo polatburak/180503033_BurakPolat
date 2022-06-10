@@ -13,28 +13,32 @@ import java.text.SimpleDateFormat;
 
 public class homePage extends JFrame {
     public JLabel Name;
-    private JPanel mainPanel;
-    private JPanel selectionPanel;
-    private JPanel parentPanel;
-    private JButton datenbankButton;
-    private JButton überDenBenutzerButton;
-    private JButton suchenButton;
-    private JPanel datenbankPanel;
-    private JPanel benutzerPanel;
-    private JPanel suchePanel;
-    private JButton startseiteButton;
-    private JPanel startPanel;
-    private JTextArea displayedText;
-    private JLabel nameLabel;
-    private JLabel benutzerLabel;
-    private JTable dataTable;
-    private JComboBox tableSelector;
-    private JButton refreshButton;
-    private JButton addARowToButton;
-    private JButton deleteSelectedRowButton;
-    private JButton updateTheModifiedRowButton;
-
-
+    public JPanel mainPanel;
+    public JPanel selectionPanel;
+    public JPanel parentPanel;
+    public JButton datenbankButton;
+    public JButton überDenBenutzerButton;
+    public JButton suchenButton;
+    public JPanel datenbankPanel;
+    public JPanel benutzerPanel;
+    public JPanel suchePanel;
+    public JButton startseiteButton;
+    public JPanel startPanel;
+    public JTextArea displayedText;
+    public JLabel nameLabel;
+    public JLabel benutzerLabel;
+    public JTable dataTable;
+    public JComboBox tableSelector;
+    public JButton refreshButton;
+    public JButton addARowToButton;
+    public JButton deleteSelectedRowButton;
+    public JButton updateTheModifiedRowButton;
+    public JLabel bnLabel;
+    public JLabel usernameArea;
+    public JLabel nameArea;
+    public JLabel dateArea;
+    public JLabel privilegArea;
+    
     public homePage() {
         add(mainPanel);
         setSize(1200, 800);
@@ -44,17 +48,18 @@ public class homePage extends JFrame {
         dataTable.setBackground(Color.cyan);
         setStartPanel();
         setLabelIcon();
+        try {
+            setNameF(loginPage.benutzername);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         setDataTable();
         ImageIcon refreshIcon = new ImageIcon(new ImageIcon("images/refresh-logo.png").getImage().getScaledInstance(32, 18, Image.SCALE_DEFAULT));
         refreshButton.setIcon(refreshIcon);
         fillDataTable("Personalen");
         ListSelectionModel model = dataTable.getSelectionModel();
 
-        try {
-            setName();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         startseiteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,6 +82,11 @@ public class homePage extends JFrame {
                 parentPanel.add(benutzerPanel);
                 parentPanel.repaint();
                 parentPanel.revalidate();
+                setDateArea();
+                usernameArea.setText(loginPage.benutzername);
+                privilegArea.setText(getPrivilege(loginPage.benutzername));
+                if(!privilegArea.getText().equals("Admin"))
+                    privilegArea.setText(privilegArea.getText() + " (Eingeschränkte Funktionalität)");
             }
         });
         tableSelector.addActionListener(new ActionListener() {
@@ -84,7 +94,7 @@ public class homePage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String tableName = null;
                 tableName = String.format("" + tableSelector.getSelectedItem());
-                if (tableName.equals("Benutzern") && (!getPrivilege(loginPage.benutzername).equals("admin"))) {
+                if (tableName.equals("Benutzern") && (!getPrivilege(loginPage.benutzername).equals("Admin"))) {
                     JOptionPane.showMessageDialog(null,
                             "Permission Denied!",
                             "Error",
@@ -105,7 +115,7 @@ public class homePage extends JFrame {
         deleteSelectedRowButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (getPrivilege(loginPage.benutzername).equals("admin"))
+                if (getPrivilege(loginPage.benutzername).equals("Admin"))
                     deleteSelectedRow();
                 else
                     JOptionPane.showMessageDialog(null,
@@ -118,14 +128,20 @@ public class homePage extends JFrame {
         updateTheModifiedRowButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateSelectedRow();
+                if (getPrivilege(loginPage.benutzername).equals("Admin"))
+                    updateSelectedRow();
+                else
+                    JOptionPane.showMessageDialog(null,
+                            "Permission Denied!",
+                            "Error",
+                            JOptionPane.WARNING_MESSAGE);
             }
         });
         addARowToButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //when clicked add a row to table
-                if (getPrivilege(loginPage.benutzername).equals("admin")) {
+                if (getPrivilege(loginPage.benutzername).equals("Admin")) {
                     try {
                         addRow();
                     } catch (SQLException ex) {
@@ -140,13 +156,22 @@ public class homePage extends JFrame {
 
             }
         });
+        suchenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parentPanel.removeAll();
+                parentPanel.add(suchePanel);
+                parentPanel.repaint();
+                parentPanel.revalidate();
+            }
+        });
     }
 
-    public void setName() throws SQLException {
+    public void setNameF(String benutzername) throws SQLException{
         connectionJDBC cJDBC = new connectionJDBC();
         Connection conn = cJDBC.getConn();
 
-        String query2 = "SELECT Vorname, Nachname FROM myschema.Personalen, myschema.Benutzern WHERE Benutzern.idBenutzern = Personalen.idbenutzer";
+        String query2 = String.format("SELECT Vorname, Nachname FROM myschema.Personalen, myschema.Benutzern WHERE Benutzern.benutzername = '%s' AND Benutzern.idBenutzern = Personalen.idbenutzer",benutzername);
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(query2);
         String Vorname = null, Nachname = null;
@@ -154,13 +179,14 @@ public class homePage extends JFrame {
             Vorname = rs.getString(1);
             Nachname = rs.getString(2);
             nameLabel.setText(Vorname + " " + Nachname);
+            nameArea.setText(Vorname + " " + Nachname);
         }
     }
 
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
-        Line2D lin = new Line2D.Float(185, 0, 185, getHeight());
+        Line2D lin = new Line2D.Float(200, 0, 200, getHeight());
         g2.draw(lin);
     }
 
@@ -332,9 +358,17 @@ public class homePage extends JFrame {
         String[] columnNames = getColumnNames(tableName);
         String query = String.format("INSERT INTO myschema.%s (", tableName);
         Object values = "VALUES (";
+        int columnCount = 0;
+
+        //Because the creationTime column is auto-generated, we don't want our loop to ask us to assign a value manually
+        if (tableSelector.getSelectedItem().equals("Benutzern"))
+            columnCount = columnNames.length - 1;
+        else
+            columnCount = columnNames.length;
+
         //get datatypes from database as array
         String[] dataTypes = getColumnTypes(tableName);
-        for (int i = 1; i < columnNames.length; i++) {
+        for (int i = 1; i < columnCount; i++) {
             String value = JOptionPane.showInputDialog(null, "Please enter a value for " + columnNames[i] + " (type: " + dataTypes[i] + ")");
             //when clicked cancel on input dialog, return
             if (value == null)
@@ -348,7 +382,7 @@ public class homePage extends JFrame {
                 i--;
                 continue;
             }
-            if (i == columnNames.length - 1) {
+            if (i == columnCount - 1) {
                 query += String.format("`%s`) ", columnNames[i]);
                 values += String.format("'%s')", value);
             } else {
@@ -432,6 +466,32 @@ public class homePage extends JFrame {
         }
         return true;
     }
+
+    //set timeArea to creationTime column from database
+    public void setDateArea() {
+        connectionJDBC cJDBC = new connectionJDBC();
+        Connection conn = null;
+        try {
+            conn = cJDBC.getConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String query = "SELECT creationDate FROM myschema.Benutzern";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                dateArea.setText(rs.getTimestamp("creationDate").toString());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void setUsernameArea(String username) {
+        usernameArea.setText(username);
+    }
+
+
 
 }
 
