@@ -39,15 +39,12 @@ public class loginPage extends JFrame {
                     }
                 } catch (SQLException ex) {
                     try {
-                        System.out.println(checkUsername.checkUsername(benutzername));
+                        System.out.println("Username couldn't be found: " + checkUsername.checkUsername(benutzername));
                     } catch (SQLException exc) {
                         exc.printStackTrace();
                     }
                     ex.printStackTrace();
                 }
-
-
-                System.out.println(benutzername + ":" + passwort);
 
                 if (usernameCorrect == true) {
                     returnPass rP = new returnPass();
