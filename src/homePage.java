@@ -9,6 +9,8 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class homePage extends JFrame {
@@ -18,10 +20,10 @@ public class homePage extends JFrame {
     private JPanel parentPanel;
     private JButton datenbankButton;
     private JButton überDenBenutzerButton;
-    private JButton suchenButton;
+    private JButton zahlungButton;
     private JPanel datenbankPanel;
     private JPanel benutzerPanel;
-    private JPanel suchePanel;
+    private JPanel zahlungPanel;
     private JButton startseiteButton;
     private JPanel startPanel;
     private JTextArea displayedText;
@@ -39,6 +41,15 @@ public class homePage extends JFrame {
     private JLabel dateArea;
     private JLabel privilegArea;
     private JLabel fahrschulsysIcon;
+    private JList eingabeList;
+    private JList ausgabeList;
+    private JLabel gesamtLabel;
+    private JLabel bezahlenLabel;
+    private JLabel nettoLabel;
+    private JLabel einDatum;
+    private JLabel ausDatum;
+    private JButton searchButton;
+    private JTextField searchBox;
 
 
     public homePage() {
@@ -51,6 +62,7 @@ public class homePage extends JFrame {
         dataTable.setBackground(Color.cyan);
         setStartPanel();
         setLabelIcon();
+        //set searchbox maxmum length to 20
 
 
         try {
@@ -163,13 +175,43 @@ public class homePage extends JFrame {
 
             }
         });
-        suchenButton.addActionListener(new ActionListener() {
+        zahlungButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                parentPanel.removeAll();
-                parentPanel.add(suchePanel);
-                parentPanel.repaint();
-                parentPanel.revalidate();
+                //if not admin, show error message
+                if(!getPrivilege(loginPage.benutzername).equals("Admin"))
+                    JOptionPane.showMessageDialog(null,
+                            "Permission Denied!",
+                            "Error",
+                            JOptionPane.WARNING_MESSAGE);
+                else{
+                    DefaultListModel model1 = new DefaultListModel();
+                    eingabeList.setModel(model1);
+                    DefaultListModel model2 = new DefaultListModel();
+                    ausgabeList.setModel(model2);
+                    int Eingabe = 0;
+                    int Ausgabe = 0;
+                    parentPanel.removeAll();
+                    parentPanel.add(zahlungPanel);
+                    parentPanel.repaint();
+                    parentPanel.revalidate();
+                    Eingabe = setEinkommenList(model1,Eingabe);
+                    Ausgabe = setAusgabenList(model2,Ausgabe);
+                    gesamtLabel.setText(Integer.toString(Eingabe) + "€");
+                    bezahlenLabel.setText(Integer.toString(Ausgabe) + "€");
+                    nettoLabel.setText(Integer.toString(Eingabe-Ausgabe) + "€");
+                    einDatum.setText(getMinDateStudenten());
+                    ausDatum.setText(getMinDatePersonal());
+                }
+            }
+        });
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String text = searchBox.getText();
+                System.out.println(text);
+                search(text, String.format("" + tableSelector.getSelectedItem()));
+
             }
         });
     }
@@ -206,7 +248,7 @@ public class homePage extends JFrame {
 
     //add image next to benutzerLabel
     public void setLabelIcon() {
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("images/Sample_User_Icon.png").getImage().getScaledInstance(32, 32, Image.SCALE_DEFAULT));
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("images/Sample_User_Icon.png").getImage().getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING));
         benutzerLabel.setIcon(imageIcon);
 
     }
@@ -497,6 +539,173 @@ public class homePage extends JFrame {
     public void setUsernameArea(String username) {
         usernameArea.setText(username);
     }
+
+    //add to einkommenList the Vorname + Nachname, leftPayment from table "Studenten" where leftpayment is not 0
+    public int setEinkommenList(DefaultListModel model1, int Einkommen) {
+        connectionJDBC cJDBC = new connectionJDBC();
+        Connection conn = null;
+        try {
+            conn = cJDBC.getConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String query = "SELECT Vorname, Nachname, leftPayment, dateOfPayment FROM myschema.Studenten WHERE leftPayment != 0";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            String date = null;
+            String date2 = null;
+            String status = "";
+            while (rs.next()) {
+                Einkommen+= rs.getInt("leftPayment");
+                date = rs.getString("dateOfPayment");
+                date2 = DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now());
+                if (date.compareTo(date2) >= 0)
+                    status = (" (To be paid!)");
+                else if (date.compareTo(date2) < 0)
+                    status = (" (There are some left payments overdue!)");
+                model1.addElement(String.format(rs.getString("Vorname") + " " + rs.getString("Nachname") + ": " + rs.getString("leftPayment") + "€ - " + rs.getString("dateOfPayment") + "%s", status));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Einkommen;
+    }
+    //setAusgabenList the Vorname + Nachname, leftPayment from table "Studenten" where leftpayment isn't 0
+    public int setAusgabenList(DefaultListModel model2,int Ausgabe) {
+        connectionJDBC cJDBC = new connectionJDBC();
+        Connection conn = null;
+        try {
+            conn = cJDBC.getConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String query = "SELECT Vorname, Nachname, leftPayment, dateOfPayment FROM myschema.Personalen WHERE leftPayment != 0";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            String date = null;
+            String date2 = null;
+            String status = "";
+            while (rs.next()) {
+                Ausgabe+= rs.getInt("leftPayment");
+                date = rs.getString("dateOfPayment");
+                date2 = DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now());
+                if (date.compareTo(date2) >= 0)
+                    status = (" (To be paid!)");
+                else if (date.compareTo(date2) < 0)
+                    status = (" (There are some left payments overdue!)");
+                model2.addElement(String.format(rs.getString("Vorname") + " " + rs.getString("Nachname") + ": " + rs.getString("leftPayment") + "€ - " + rs.getString("dateOfPayment") + "%s",status));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Ausgabe;
+    }
+
+    //select min(Date) from column "dateOfPayment" from table "Studenten"
+    public String getMinDateStudenten() {
+        connectionJDBC cJDBC = new connectionJDBC();
+        Connection conn = null;
+        try {
+            conn = cJDBC.getConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String query = "SELECT MIN(dateOfPayment) FROM myschema.Studenten";
+        String minDate = "";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                minDate = rs.getString("MIN(dateOfPayment)");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return minDate;
+    }
+    //select min(dateOfPayment) from table "Personalen"
+    public String getMinDatePersonal() {
+        connectionJDBC cJDBC = new connectionJDBC();
+        Connection conn = null;
+        try {
+            conn = cJDBC.getConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String query = "SELECT MIN(dateOfPayment) FROM myschema.Personalen";
+        String minDate = "";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                minDate = rs.getString("MIN(dateOfPayment)");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return minDate;
+    }
+
+    public void search(String text, String tableName) {
+        connectionJDBC cJDBC = new connectionJDBC();
+        Connection conn = null;
+        try {
+            conn = cJDBC.getConn();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(tableName.equals("Personalen")) {
+          String query1 = "SELECT * FROM myschema.Personalen WHERE Vorname LIKE '%" + text + "%' OR Nachname LIKE '%" + text + "%' OR fatherName LIKE '%" + text + "%' OR Geburtsdatum LIKE '%" + text + "%' OR Adresse LIKE '%" + text + "%' OR Gehalt LIKE '%" + text + "%' OR leftPayment LIKE '%" + text + "%' OR dateOfPayment LIKE '%" + text + "%' OR Geschlechter LIKE '%" + text + "%' OR idTC LIKE '%" + text + "%' OR Telefonnummer LIKE '%" + text + "%' OR Beruf LIKE '%" + text + "%'";
+          try {
+              Statement stmt = conn.createStatement();
+              ResultSet rs = stmt.executeQuery(query1);
+              dataTable.setModel(DbUtils.resultSetToTableModel(rs));
+          } catch (SQLException e) {
+              e.printStackTrace();
+          }
+
+        } else if(tableName.equals("Studenten")) {
+            String query2 = "SELECT * FROM myschema.Studenten WHERE Vorname LIKE '%" + text + "%' OR Nachname LIKE '%" + text + "%' OR fatherName LIKE '%" + text + "%' OR Geburtsdatum LIKE '%" + text + "%' OR Adresse LIKE '%" + text + "%' OR Geschlechter LIKE '%" + text + "%' OR gewünschteFührerSchein LIKE '%" + text + "%' OR Zahlungstatus LIKE '%" + text + "%' OR leftPayment LIKE '%" + text + "%' OR dateOfPayment LIKE '%" + text + "%' OR idTC LIKE '%" + text + "%' OR Telefonnumer LIKE '%" + text + "%' OR Klassen LIKE '%" + text + "%'";
+            try {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query2);
+                dataTable.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else if(tableName.equals("Benutzern")) {
+            String query3 = "SELECT * FROM myschema.Benutzern WHERE benutzername LIKE '%" + text + "%' OR Privileg LIKE '%" + text + "%'";
+            try {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query3);
+                dataTable.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else if(tableName.equals("Fahrzeuge")){
+            String query4 = "SELECT * FROM myschema.Fahrzeuge WHERE Markenname LIKE '%" + text + "%' OR Modell LIKE '%" + text + "%' OR Getriebtyp LIKE '%" + text + "%' OR Modelljahr LIKE '%" + text + "%' OR Karossiertyp LIKE '%" + text + "%' OR zuordneteStudenten LIKE '%" + text + "%'";
+            try {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query4);
+                dataTable.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else if(tableName.equals("Klassen")){
+            String query5 = "SELECT * FROM myschema.Klassen WHERE Klassenname LIKE '%" + text + "%' OR angemeldetenSchüler LIKE '%" + text + "%' OR Klasselehrer LIKE '%" + text + "%' OR Klassengröße LIKE '%" + text + "%' OR requiredKlassen LIKE '%" + text + "%'";
+            try {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query5);
+                dataTable.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 
 
 

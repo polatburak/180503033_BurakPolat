@@ -69,7 +69,7 @@
               <text value="Über den Benutzer"/>
             </properties>
           </component>
-          <component id="4224e" class="javax.swing.JButton" binding="suchenButton" default-binding="true">
+          <component id="4224e" class="javax.swing.JButton" binding="zahlungButton">
             <constraints>
               <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -79,7 +79,7 @@
               <contentAreaFilled value="false"/>
               <font name="Droid Sans Mono" size="14" style="1"/>
               <foreground color="-11959621"/>
-              <text value="Suchen"/>
+              <text value="Zahlungen"/>
             </properties>
           </component>
           <component id="6cd9a" class="javax.swing.JButton" binding="startseiteButton" default-binding="true">
@@ -111,7 +111,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="2bab7" binding="datenbankPanel" layout-manager="GridLayoutManager" row-count="6" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="2bab7" binding="datenbankPanel" layout-manager="GridLayoutManager" row-count="8" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <card name="Card1"/>
@@ -125,7 +125,7 @@
             <children>
               <scrollpane id="b36f0">
                 <constraints>
-                  <grid row="0" column="0" row-span="5" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="1" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="6" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="1" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <focusable value="false"/>
@@ -152,7 +152,7 @@
               </scrollpane>
               <component id="fffb9" class="javax.swing.JButton" binding="refreshButton">
                 <constraints>
-                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="86" height="42"/>
                   </grid>
                 </constraints>
@@ -168,7 +168,7 @@
               </component>
               <component id="43121" class="javax.swing.JComboBox" binding="tableSelector">
                 <constraints>
-                  <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                  <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="115" height="42"/>
                   </grid>
                 </constraints>
@@ -186,7 +186,7 @@
               </component>
               <component id="df5a5" class="javax.swing.JButton" binding="addARowToButton" default-binding="true">
                 <constraints>
-                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Add a Row Entry into the Database"/>
@@ -194,28 +194,44 @@
               </component>
               <component id="6279d" class="javax.swing.JButton" binding="deleteSelectedRowButton" default-binding="true">
                 <constraints>
-                  <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Delete Selected Row"/>
                 </properties>
               </component>
-              <vspacer id="95543">
-                <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
               <vspacer id="b5bf">
                 <constraints>
-                  <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="6" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
               <component id="c0313" class="javax.swing.JButton" binding="updateTheModifiedRowButton" default-binding="true">
                 <constraints>
-                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Update the Modified Row in the Database"/>
+                </properties>
+              </component>
+              <vspacer id="3341">
+                <constraints>
+                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="d801e" class="javax.swing.JTextField" binding="searchBox">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="1fd61" class="javax.swing.JButton" binding="searchButton">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Search"/>
                 </properties>
               </component>
             </children>
@@ -342,16 +358,194 @@
               </hspacer>
             </children>
           </grid>
-          <grid id="4574a" binding="suchePanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="4574a" binding="zahlungPanel" layout-manager="GridLayoutManager" row-count="5" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <card name="Card3"/>
             </constraints>
             <properties>
               <background color="-16773567"/>
+              <foreground color="-6619132"/>
             </properties>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="94ebe" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="15" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Droid Sans Mono" size="14"/>
+                  <foreground color="-16737749"/>
+                  <text value="Erwartetes Einkommen:"/>
+                </properties>
+              </component>
+              <component id="1b323" class="javax.swing.JLabel" binding="gesamtLabel">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Droid Sans Mono" size="14"/>
+                  <foreground color="-6619132"/>
+                  <text value="?"/>
+                </properties>
+              </component>
+              <component id="c3ce2" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-16737749"/>
+                  <text value="Nächstes Einkommensdatum:"/>
+                </properties>
+              </component>
+              <component id="2df18" class="javax.swing.JLabel" binding="einDatum">
+                <constraints>
+                  <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-6619132"/>
+                  <text value="?"/>
+                </properties>
+              </component>
+              <component id="920e5" class="javax.swing.JLabel" binding="ausDatum">
+                <constraints>
+                  <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-6619132"/>
+                  <text value="?"/>
+                </properties>
+              </component>
+              <component id="8cbe6" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-16737749"/>
+                  <text value="Nächstes Zahlungsdatum: "/>
+                </properties>
+              </component>
+              <component id="fab9e" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="15" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Droid Sans Mono" size="14"/>
+                  <foreground color="-16737749"/>
+                  <text value="Zu Bezahlen:"/>
+                </properties>
+              </component>
+              <component id="a4609" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="15" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Droid Sans Mono" size="14"/>
+                  <foreground color="-16737749"/>
+                  <text value="Nettoeinkommen:"/>
+                </properties>
+              </component>
+              <component id="a62e6" class="javax.swing.JLabel" binding="bezahlenLabel">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Droid Sans Mono" size="14"/>
+                  <foreground color="-6619132"/>
+                  <text value="?"/>
+                </properties>
+              </component>
+              <component id="ce82e" class="javax.swing.JLabel" binding="nettoLabel">
+                <constraints>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Droid Sans Mono" size="14"/>
+                  <foreground color="-6619132"/>
+                  <text value="?"/>
+                </properties>
+              </component>
+              <hspacer id="2a53c">
+                <constraints>
+                  <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <hspacer id="bcb30">
+                <constraints>
+                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <tabbedpane id="471b">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="6" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="1" use-parent-layout="false">
+                    <preferred-size width="200" height="200"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-11959621"/>
+                  <foreground color="-15056595"/>
+                  <inheritsPopupMenu value="true"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <grid id="34156" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <tabbedpane title="Einkommen (+)"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <scrollpane id="79301">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="3627a" class="javax.swing.JList" binding="eingabeList">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                  <grid id="ce2e9" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <tabbedpane title="Ausgaben (-)"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <scrollpane id="458ac">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="7a9ea" class="javax.swing.JList" binding="ausgabeList">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                </children>
+              </tabbedpane>
+              <component id="6fdb0" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-16773567"/>
+                  <text value="isEmpty"/>
+                </properties>
+              </component>
+            </children>
           </grid>
           <grid id="37b00" binding="startPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
@@ -380,7 +574,7 @@
                   <foreground color="-11959621"/>
                   <name value=""/>
                   <opaque value="false"/>
-                  <text value="Hallo,&#10;&#10;Sie benutzen die erste Version von FahrschulSys.&#10;&#10;Hier können Sie die Daten über Schüler, verfügbare Fahrzeuge und vieles mehr anschauen.&#10;&#10;Sie können auch die Datenbank durchsuchen und mit Hilfe von Filtern bestimmten Informationen finden.&#10;&#10;Viel Spaß"/>
+                  <text value="Hallo,&#10;&#10;Sie benutzen die erste Version von FahrschulSys.&#10;&#10;Hier können Sie die Daten über Schüler, Personalen, Zahlungen und vieles mehr anschauen.&#10;&#10;Außerdem können Sie die Datenbank über das Suchfeld filtern.&#10;&#10;Und zusätzliche Funktionen für Admins sind jetzt ebenfalls verfügbar! &#10;&#10;Viel Spaß"/>
                 </properties>
               </component>
               <component id="60e4" class="javax.swing.JLabel" binding="fahrschulsysIcon">
