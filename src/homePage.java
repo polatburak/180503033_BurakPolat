@@ -50,6 +50,7 @@ public class homePage extends JFrame {
     private JLabel ausDatum;
     private JButton searchButton;
     private JTextField searchBox;
+    private JButton logOutButton;
 
 
     public homePage() {
@@ -211,6 +212,14 @@ public class homePage extends JFrame {
                 System.out.println(text);
                 search(text, String.format("" + tableSelector.getSelectedItem()));
 
+            }
+        });
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.this.dispose();
+                loginPage lp = new loginPage();
+                lp.setVisible(true);
             }
         });
     }
@@ -415,14 +424,14 @@ public class homePage extends JFrame {
         //get datatypes from database as array
         String[] dataTypes = getColumnTypes(tableName);
         for (int i = 1; i < columnCount; i++) {
-            String value = JOptionPane.showInputDialog(null, "Please enter a value for " + columnNames[i] + " (type: " + dataTypes[i] + ")");
+            String value = JOptionPane.showInputDialog(null, "Bitte geben Sie einen Wert für " + columnNames[i] + " (type: " + dataTypes[i] + ")");
             //when clicked cancel on input dialog, return
             if (value == null)
                 return;
             //when given wrong datatype or empty value show error message
             if (value == null || value.equals("") || !checkDataType(dataTypes[i], value)) {
                 JOptionPane.showMessageDialog(null,
-                        "Please enter a valid value for " + columnNames[i] + "!",
+                        "Bitte geben Sie einen Wert für " + columnNames[i] + "!",
                         "Error",
                         JOptionPane.WARNING_MESSAGE);
                 i--;
@@ -449,7 +458,7 @@ public class homePage extends JFrame {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
-                    "Row couldn't be added! Try again!",
+                    "Zeile konnte nicht hinzugefügt werden! Versuchen Sie es bitte noch einmal!",
                     "Error",
                     JOptionPane.WARNING_MESSAGE);
             e.printStackTrace();

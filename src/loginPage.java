@@ -55,7 +55,7 @@ public class loginPage extends JFrame {
                     if (passwort.equals(actualPass)) {
                         homePage hp = new homePage();
                         hp.setVisible(true);
-                        setVisible(false);
+                        dispose();
                     } else {
                         JOptionPane.showMessageDialog(null,
                                 "Wrong Password!",

@@ -604,7 +604,7 @@
       </component>
       <component id="9c8c8" class="javax.swing.JLabel" binding="nameLabel">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="8" fill="2" indent="0" use-parent-layout="false">
             <maximum-size width="100" height="24"/>
           </grid>
         </constraints>
@@ -612,9 +612,17 @@
           <autoscrolls value="false"/>
           <font name="Droid Sans Mono" size="12"/>
           <foreground color="-16737749"/>
-          <horizontalAlignment value="0"/>
+          <horizontalAlignment value="2"/>
           <horizontalTextPosition value="2"/>
           <text value="NameGoesHere"/>
+        </properties>
+      </component>
+      <component id="94f" class="javax.swing.JButton" binding="logOutButton" default-binding="true">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Log-Out"/>
         </properties>
       </component>
     </children>
