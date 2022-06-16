@@ -29,7 +29,7 @@ public class homePage extends JFrame {
     private JTextArea displayedText;
     private JLabel nameLabel;
     private JLabel benutzerLabel;
-    private JTable dataTable;
+    public JTable dataTable;
     private JComboBox tableSelector;
     private JButton refreshButton;
     private JButton addARowToButton;
@@ -62,7 +62,6 @@ public class homePage extends JFrame {
         dataTable.setBackground(Color.cyan);
         setStartPanel();
         setLabelIcon();
-        //set searchbox maxmum length to 20
 
 
         try {
@@ -92,6 +91,7 @@ public class homePage extends JFrame {
                 parentPanel.add(datenbankPanel);
                 parentPanel.repaint();
                 parentPanel.revalidate();
+                SwingUtilities.getRootPane(searchButton).setDefaultButton(searchButton);
             }
         });
         überDenBenutzerButton.addActionListener(new ActionListener() {
@@ -159,7 +159,6 @@ public class homePage extends JFrame {
         addARowToButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //when clicked add a row to table
                 if (getPrivilege(loginPage.benutzername).equals("Admin")) {
                     try {
                         addRow();
@@ -246,7 +245,7 @@ public class homePage extends JFrame {
         parentPanel.revalidate();
     }
 
-    //add image next to benutzerLabel
+    //add image next to benutzerLabel in mainPanel
     public void setLabelIcon() {
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("images/Sample_User_Icon.png").getImage().getScaledInstance(32, 32, Image.SCALE_AREA_AVERAGING));
         benutzerLabel.setIcon(imageIcon);
@@ -254,7 +253,7 @@ public class homePage extends JFrame {
     }
 
 
-    //fill dataTable with data from database
+    //fill dataTable in Datenbank scene with data from database
     public void fillDataTable(String tablename) {
         connectionJDBC cJDBC = new connectionJDBC();
         Connection conn = null;
@@ -341,7 +340,6 @@ public class homePage extends JFrame {
 
             for (int i = 1; i < columnNames.length; i++) {
                 Object value = dataTable.getValueAt(selectedRow, i);
-
                 if (i == columnNames.length - 1)
                     query += String.format("`%s` = '%s' WHERE id%s = %s", columnNames[i], value, tableName, id);
                 else
@@ -376,7 +374,6 @@ public class homePage extends JFrame {
         }
     }
 
-    //get column names from database
     public String[] getColumnNames(String tableName) {
         connectionJDBC cJDBC = new connectionJDBC();
         Connection conn = null;
@@ -401,7 +398,7 @@ public class homePage extends JFrame {
         return columnNames;
     }
 
-    //add a row to the datatable
+    //add a row entry to the databasee
     public void addRow() throws SQLException {
         String tableName = String.format("" + tableSelector.getSelectedItem());
         String[] columnNames = getColumnNames(tableName);
@@ -485,7 +482,7 @@ public class homePage extends JFrame {
         return columnNames;
     }
 
-    //check if the given value is of the given datatype
+    //check if the given value is of the given datatype (used while adding a row entry)
     public boolean checkDataType(String dataType, String value) {
         if (dataType.equals("INT")) {
             try {
@@ -561,9 +558,9 @@ public class homePage extends JFrame {
                 date = rs.getString("dateOfPayment");
                 date2 = DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now());
                 if (date.compareTo(date2) >= 0)
-                    status = (" (To be paid!)");
+                    status = (" (Zu zahlen)");
                 else if (date.compareTo(date2) < 0)
-                    status = (" (There are some left payments overdue!)");
+                    status = (" (Überfällig!)");
                 model1.addElement(String.format(rs.getString("Vorname") + " " + rs.getString("Nachname") + ": " + rs.getString("leftPayment") + "€ - " + rs.getString("dateOfPayment") + "%s", status));
             }
         } catch (SQLException e) {
@@ -571,7 +568,7 @@ public class homePage extends JFrame {
         }
         return Einkommen;
     }
-    //setAusgabenList the Vorname + Nachname, leftPayment from table "Studenten" where leftpayment isn't 0
+    //set AusgabenList the Vorname + Nachname, leftPayment from table "Studenten" where leftpayment isn't 0
     public int setAusgabenList(DefaultListModel model2,int Ausgabe) {
         connectionJDBC cJDBC = new connectionJDBC();
         Connection conn = null;
@@ -592,9 +589,9 @@ public class homePage extends JFrame {
                 date = rs.getString("dateOfPayment");
                 date2 = DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now());
                 if (date.compareTo(date2) >= 0)
-                    status = (" (To be paid!)");
+                    status = (" (Zu zahlen)");
                 else if (date.compareTo(date2) < 0)
-                    status = (" (There are some left payments overdue!)");
+                    status = (" (Überfällig!)");
                 model2.addElement(String.format(rs.getString("Vorname") + " " + rs.getString("Nachname") + ": " + rs.getString("leftPayment") + "€ - " + rs.getString("dateOfPayment") + "%s",status));
             }
         } catch (SQLException e) {
@@ -603,7 +600,7 @@ public class homePage extends JFrame {
         return Ausgabe;
     }
 
-    //select min(Date) from column "dateOfPayment" from table "Studenten"
+    //select min(Date) from column "dateOfPayment" from table "Studenten" (for calculating the next income)
     public String getMinDateStudenten() {
         connectionJDBC cJDBC = new connectionJDBC();
         Connection conn = null;
@@ -625,7 +622,7 @@ public class homePage extends JFrame {
         }
         return minDate;
     }
-    //select min(dateOfPayment) from table "Personalen"
+    //select min(dateOfPayment) from table "Personalen" (for calculating the next outcome)
     public String getMinDatePersonal() {
         connectionJDBC cJDBC = new connectionJDBC();
         Connection conn = null;
@@ -705,9 +702,6 @@ public class homePage extends JFrame {
         }
 
     }
-
-
-
 
 }
 

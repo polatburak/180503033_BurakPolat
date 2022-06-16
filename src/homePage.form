@@ -189,7 +189,8 @@
                   <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Add a Row Entry into the Database"/>
+                  <font/>
+                  <text value="Füge eines Eintrags in die Datenbank hinzu&#10;&#10;"/>
                 </properties>
               </component>
               <component id="6279d" class="javax.swing.JButton" binding="deleteSelectedRowButton" default-binding="true">
@@ -197,7 +198,7 @@
                   <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Delete Selected Row"/>
+                  <text value="Lösche ausgewählte Zeile"/>
                 </properties>
               </component>
               <vspacer id="b5bf">
@@ -210,7 +211,7 @@
                   <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Update the Modified Row in the Database"/>
+                  <text value="Aktualisiere die geänderte Zeile in der Datenbank"/>
                 </properties>
               </component>
               <vspacer id="3341">
@@ -231,7 +232,7 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Search"/>
+                  <text value="Suche"/>
                 </properties>
               </component>
             </children>
