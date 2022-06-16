@@ -21,7 +21,7 @@ Der gesamte Code wurde in Java geschrieben, einschließlich der grafischen Benut
 <img width="1312" alt="Screen Shot 2022-06-17 at 02 31 32" src="https://user-images.githubusercontent.com/100538337/174195175-3ec53645-1920-4abc-a959-fad27e7799e7.png">
 <img width="1312" alt="Screen Shot 2022-06-17 at 02 33 19" src="https://user-images.githubusercontent.com/100538337/174195181-ef694f80-2314-48cd-91d7-30ec665e663e.png">
 <img width="1312" alt="Screen Shot 2022-06-17 at 02 33 26" src="https://user-images.githubusercontent.com/100538337/174195183-41f4525f-6f23-470f-b006-b25c613a97c2.png">
-![Uploading Screen Shot 2022-06-17 at 02.34.40.png…]()
+
 
 
 
