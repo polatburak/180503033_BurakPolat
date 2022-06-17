@@ -4,7 +4,6 @@
     <root id="root">
       <element id="library" level="project" name="commons-dbutils-1" />
       <element id="library" level="project" name="mysql-connector-java-8.0" />
-      <element id="library" level="project" name="rs2xml" />
       <element id="archive" name="FahrschulSys.jar">
         <element id="module-output" name="180503033_BurakPolat" />
       </element>
