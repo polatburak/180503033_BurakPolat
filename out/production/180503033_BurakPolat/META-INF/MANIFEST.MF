@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: Main
-Class-Path: commons-dbutils-1.7-javadoc.jar commons-dbutils-1.7-sources.
- jar commons-dbutils-1.7-test-sources.jar commons-dbutils-1.7-tests.jar 
- commons-dbutils-1.7.jar mysql-connector-java-8.0.29.jar rs2xml.jar imag
- es
-
